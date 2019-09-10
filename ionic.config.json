@@ -1,6 +1,8 @@
 {
   "name": "miService",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular",
   "id": "9394c7f7"
 }

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1007950412144",
+    "firebase_url": "https://miservice-a7d26.firebaseio.com",
+    "project_id": "miservice-a7d26",
+    "storage_bucket": "miservice-a7d26.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1007950412144:android:3b3c735d785aefba90f7b5",
+        "android_client_info": {
+          "package_name": "com.sharkhype.miservice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1007950412144-75ns41ptf36pghkfvi4o4p9b6fia6bpv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwIAqaIhLB-YcrnUqm_MO0rE2T7jzftdY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1007950412144-75ns41ptf36pghkfvi4o4p9b6fia6bpv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1007950412144-3al60vc2ujhus4l8s19ejhk36hbhbk6o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.sharkhype.miservice"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
