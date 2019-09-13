@@ -1,6 +1,6 @@
 <ion-app>
   
-  <ion-menu side="start" type="push" #sidemenu>
+  <ion-menu side="start" type="overlay" #sidemenu>
      
     <ion-header>
       <ion-toolbar color="dark">
@@ -15,14 +15,16 @@
         <ion-item routerLink="/" (click)="sidemenu.close()">
           <ion-label>Home</ion-label>
         </ion-item>
-        <ion-item routerLink="/adpost" (click)="sidemenu.close()">
-          <ion-label>Ad Posts</ion-label>
+    
+        <ion-item *ngIf="!isLoggedIn" routerLink="/register" (click)="sidemenu.close()">
+          <ion-label>Sign Up</ion-label>
         </ion-item>
-        <ion-item routerLink="/adpost/create" (click)="sidemenu.close()">
-          <ion-label>Create Ad</ion-label>
+        <ion-item *ngIf="!isLoggedIn" routerLink="/login" (click)="sidemenu.close()">
+          <ion-label>Sign In</ion-label>
         </ion-item>
-        <ion-item routerLink="/register" (click)="sidemenu.close()">
-          <ion-label>Register</ion-label>
+
+        <ion-item *ngIf="isLoggedIn" href="" (click)="sidemenu.close();signout()">
+          <ion-label>Sign Out</ion-label>
         </ion-item>
       </ion-list>
 

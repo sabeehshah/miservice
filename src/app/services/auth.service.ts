@@ -32,9 +32,9 @@ export class AuthService {
       switchMap(user => (user ? db.doc$(`users/${user.uid}`) : of(null)))
     );
 
-   
-      this.handleRedirect();
-    
+
+    this.handleRedirect();
+
   }
 
   uid() {
@@ -136,19 +136,24 @@ export class AuthService {
     );
   }
 
-  registerWithEmailAndPassword(email:string, password:string){
-    return new Promise((resolve,reject)=>{
-      this.afAuth.auth.createUserWithEmailAndPassword(email,password)
-      .then(userData => resolve(userData),
-      err => reject(err))
+  registerWithEmailAndPassword(email: string, password: string) {
+    return new Promise((resolve, reject) => {
+      this.afAuth.auth.createUserWithEmailAndPassword(email, password)
+        .then(userData => resolve(userData),
+          err => reject(err))
     });
   }
 
-  loginWithEmailAndPassword(email:string, password:string){
-    return new Promise((resolve,reject)=>{
-      this.afAuth.auth.signInWithEmailAndPassword(email,password)
-      .then(userData => resolve(userData),
-      err => reject(err))
+  loginWithEmailAndPassword(email: string, password: string) {
+    return new Promise((resolve, reject) => {
+      this.afAuth.auth.signInWithEmailAndPassword(email, password)
+        .then(userData => resolve(userData),
+          err => reject(err))
     });
   }
+
+  getAuth() {
+    return this.afAuth.authState.pipe(map(auth => auth));
+  }
+
 }

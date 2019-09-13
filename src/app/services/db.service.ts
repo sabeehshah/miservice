@@ -60,4 +60,8 @@ export class DbService {
   delete(path) {
     return this.afs.doc(path).delete();
   }
+
+  getUser(email:string){
+    return this.afs.collection('users', ref => ref.where('email', '==', email)).valueChanges()
+  }
 }
