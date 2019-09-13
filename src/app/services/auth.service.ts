@@ -17,7 +17,6 @@ import { Storage } from '@ionic/storage';
   providedIn: 'root'
 })
 export class AuthService {
-
   user$: Observable<any>;
 
   constructor(
@@ -33,8 +32,24 @@ export class AuthService {
       switchMap(user => (user ? db.doc$(`users/${user.uid}`) : of(null)))
     );
 
-    this.handleRedirect();
-   }
+   
+      this.handleRedirect();
+    
+  }
+
+  uid() {
+    return this.user$
+      .pipe(
+        take(1),
+        map(u => u && u.uid)
+      )
+      .toPromise();
+  }
+
+  async anonymousLogin() {
+    const credential = await this.afAuth.auth.signInAnonymously();
+    return await this.updateUserData(credential.user);
+  }
 
   private updateUserData({ uid, email, displayName, photoURL, isAnonymous }) {
     // Sets user data to firestore on login
@@ -52,19 +67,12 @@ export class AuthService {
     return this.db.updateAt(path, data);
   }
 
-  uid() {
-    return this.user$
-      .pipe(
-        take(1),
-        map(u => u && u.uid)
-      )
-      .toPromise();
-  }
-
   async signOut() {
     await this.afAuth.auth.signOut();
     return this.router.navigate(['/']);
   }
+
+  //// GOOGLE AUTH
 
   setRedirect(val) {
     this.storage.set('authRedirect', val);
@@ -92,16 +100,19 @@ export class AuthService {
     }
   }
 
-
-  private async handleRedirect(){
-    if ((await this.isRedirect()) !== true){
+  // Handle login with redirect for web Google auth
+  private async handleRedirect() {
+    if ((await this.isRedirect()) !== true) {
       return null;
     }
     const loading = await this.loadingController.create();
     await loading.present();
 
     const result = await this.afAuth.auth.getRedirectResult();
-    if(result.user){
+
+    console.log(result)
+
+    if (result.user) {
       await this.updateUserData(result.user);
     }
 
@@ -111,10 +122,11 @@ export class AuthService {
 
     return result;
   }
+
   async nativeGoogleLogin(): Promise<any> {
     const gplusUser = await this.gplus.login({
       webClientId:
-        '1085404550227-h1iabv9megngs4eleo7kd5khoo4fkn98.apps.googleusercontent.com',
+        '1007950412144-75ns41ptf36pghkfvi4o4p9b6fia6bpv.apps.googleusercontent.com',
       offline: true,
       scopes: 'profile email'
     });
@@ -122,5 +134,21 @@ export class AuthService {
     return await this.afAuth.auth.signInWithCredential(
       auth.GoogleAuthProvider.credential(gplusUser.idToken)
     );
+  }
+
+  registerWithEmailAndPassword(email:string, password:string){
+    return new Promise((resolve,reject)=>{
+      this.afAuth.auth.createUserWithEmailAndPassword(email,password)
+      .then(userData => resolve(userData),
+      err => reject(err))
+    });
+  }
+
+  loginWithEmailAndPassword(email:string, password:string){
+    return new Promise((resolve,reject)=>{
+      this.afAuth.auth.signInWithEmailAndPassword(email,password)
+      .then(userData => resolve(userData),
+      err => reject(err))
+    });
   }
 }

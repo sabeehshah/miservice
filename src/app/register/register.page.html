@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>register</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content style="text-align: center">
+
+  <form [formGroup]="myForm">
+
+    <mat-form-field>
+      <mat-icon matSuffix>person</mat-icon>
+      <input matInput placeholder="Full Name" formControlName="name">
+
+      <mat-error *ngIf="name.invalid && name.touched">
+        Minimum 3 characters required!
+      </mat-error>
+
+      <mat-label *ngIf="name.valid && name.touched" style="color:green">That looks good!</mat-label>
+
+    </mat-form-field>
+
+    <hr>
+
+    <mat-form-field>
+      <mat-icon matSuffix>mail</mat-icon>
+      <input matInput placeholder="Email" formControlName="email">
+
+      <mat-error *ngIf="email.invalid && email.touched">
+        Your email does not look right!
+      </mat-error>
+
+      <mat-label *ngIf="email.valid && email.touched" style="color:green">That looks good!</mat-label>
+
+     
+    </mat-form-field>
+
+    <hr>
+
+    <mat-form-field>
+      <mat-icon matSuffix>lock</mat-icon>
+      <input type="password" placeholder="Password" matInput formControlName="password">
+
+      <mat-hint align="start">Must have one letter, and one number</mat-hint>
+
+      <mat-error *ngIf="password.invalid && password.touched">
+        That password sucks!
+      </mat-error>
+
+      <mat-label *ngIf="password.valid && password.touched" style="color:green">That looks good!</mat-label>
+     
+    </mat-form-field>
+
+
+  </form>
+
+  <br>
+  <br>
+  <button [disabled]="myForm.invalid" (click)="register()" color="primary" mat-raised-button>Sign Up</button>
+
+
+</ion-content>
